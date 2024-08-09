@@ -26,6 +26,22 @@ app.get("/create", (req, res) => {
   }
 });
 
+// route to list all .txt files in the Timestamp directory
+app.get("/read", (req, res) => {
+  const dirPath = path.join("Timestamp");
+
+  fs.readdir(dirPath, (err, files) => {
+    if (err) {
+      return res.status(500).send("Error reading directory");
+    }
+
+    // Filter out only .txt files
+    const txtFiles = files.filter(file => path.extname(file) === ".txt");
+
+    res.status(200).json(txtFiles);
+  });
+});
+
 // route to read a file based on a timestamp
 app.get("/read/:timestamp", (req, res) => {
   const { timestamp } = req.params;
