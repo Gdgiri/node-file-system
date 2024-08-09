@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(cors()); // enable CORS
 
 // route to create a file with the current timestamp
-app.get("/create", (req, res) => {
+app.post("/create", (req, res) => {
   let today = format(new Date(), "dd-MM-yyyy-HH-mm-ss"); // note the date format adjustment
   const filepath = path.join("Timestamp", `${today}.txt`);
 
@@ -36,7 +36,7 @@ app.get("/read", (req, res) => {
     }
 
     // Filter out only .txt files
-    const txtFiles = files.filter(file => path.extname(file) === ".txt");
+    const txtFiles = files.filter((file) => path.extname(file) === ".txt");
 
     res.status(200).json(txtFiles);
   });
